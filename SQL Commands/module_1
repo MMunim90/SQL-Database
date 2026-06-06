@@ -1,0 +1,55 @@
+-- USE Phitron;
+
+CREATE TABLE Student (
+	Roll CHAR(4) PRIMARY KEY,
+    Name VARCHAR(50),
+    Marks DOUBLE
+);
+
+INSERT INTO Student
+(Roll, Name, Marks) VALUES(1, "Munim", 90);
+
+INSERT INTO Student
+(Roll, Name) VALUES(2, "Halim");
+
+INSERT INTO Student
+(Roll, Name, Marks) VALUES(3, "karim", 85);
+
+INSERT INTO Student
+(Roll, Name, Marks) VALUES(4, "Mahim", 89);
+
+INSERT INTO Student
+(Roll, Name, Marks) VALUES(5, "Azim", 89);
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE Student
+SET Name = "Md. Shahan Al Munim"
+WHERE Roll = 1;
+SET SQL_SAFE_UPDATES = 1;
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM Student
+WHERE Roll = 4;
+SET SQL_SAFE_UPDATES = 1;
+
+-- DROP table student;
+
+CREATE TABLE Employee(
+	EmployeeId CHAR(4) PRIMARY KEY,
+    EmployeeName VARCHAR(50),
+    EmployeeSalary DOUBLE,
+    JoiningDate DATE
+);
+    
+
+INSERT INTO Employee
+(EmployeeId, EmployeeName, EmployeeSalary, JoiningDate) VALUES('0001', "Halim Khan", 25000.0, '2026-03-01');
+
+INSERT INTO Employee
+(EmployeeId, EmployeeName, EmployeeSalary, JoiningDate) VALUES('0002', "Karim Ahmed", 27000.0, '2026-04-03');
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM Employee
+WHERE EmployeeID = '0002';
+SET SQL_SAFE_UPDATES = 1;
+
