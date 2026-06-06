@@ -1,0 +1,29 @@
+-- 2 
+SELECT Departments.Department_Name
+FROM Departments
+LEFT JOIN Employees
+ON Departments.Department_Id = Employees.Department_Id
+WHERE Employees.Department_Id IS NULL;
+
+
+
+-- 3
+SELECT Employees.First_Name, 
+	   Employees.Salary, 
+       (SELECT AVG(Salary)
+		FROM Employees
+		WHERE Department_Id = Employees.Department_Id) - Employees.Salary AS Salary_Difference
+FROM Employees
+JOIN Departments
+ON Employees.Employee_Id = Departments.Department_Id;
+
+
+
+-- 4
+SELECT Department_Name, MIN(Salary), AVG(Salary)
+FROM Employees
+JOIN Departments
+ON Employees.Department_Id = Departments.Department_Id
+GROUP BY Department_Name
+HAVING MIN(Salary) > 8000;
+
