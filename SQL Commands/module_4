@@ -1,0 +1,117 @@
+SELECT e.First_Name, e.Manager_Id
+FROM Employees AS e
+JOIN Employees AS m
+ON e.Manager_Id = m.Employee_Id
+ORDER BY Manager_Id ASC;
+
+
+USE dummydb;
+
+CREATE TABLE Employees
+(
+	Employee_Id INT PRIMARY KEY,
+    First_Name VARCHAR(25),
+    Last_Name VARCHAR(25),
+    Date_of_Birth DATE,
+    Department_Id INT,
+    Salary INT
+);
+
+CREATE TABLE Projects
+(
+	Project_Id INT PRIMARY KEY,
+    Project_Name VARCHAR(50),
+    Start_Date DATE,
+    End_Date DATE,
+    Budget INT
+);
+
+CREATE TABLE Employee_Projects
+(
+	Employee_Id INT,
+    FOREIGN KEY(Employee_Id) 
+    REFERENCES Employees(Employee_Id),
+    Project_Id INT,
+    FOREIGN KEY(Project_Id) REFERENCES Projects(Project_Id)
+);
+
+
+
+-- 4
+SELECT MAX(Salary)
+FROM Employees
+WHERE Salary < (SELECT MAX(Salary)
+				FROM Employees
+                WHERE Salary < (SELECT MAX(Salary)
+								FROM Employees));
+                                
+                                
+-- 5
+SELECT Department_Name, 
+	   COUNT(Employee_Id) AS Number_of_Employee
+FROM Employees
+JOIN Departments
+ON Employees.Department_Id = Departments.Department_Id
+GROUP BY Department_Name; 
+
+
+-- 6
+-- INNER JOIN
+SELECT First_Name AS Employee_Name, Department_Name
+FROM Employees
+INNER JOIN Departments
+ON Employees.Department_Id = Departments.Department_Id;
+
+-- LEFT JOIN
+SELECT First_Name AS Employee_Name, Department_Name
+FROM Employees
+LEFT JOIN Departments
+ON Employees.Department_Id = Departments.Department_Id;
+
+-- RIGHT JOIN
+SELECT First_Name AS Employee_Name, Department_Name
+FROM Employees
+RIGHT JOIN Departments
+ON Employees.Department_Id = Departments.Department_Id;
+
+-- CROSS JOIN
+SELECT First_Name AS Employee_Name, Department_Name
+FROM Employees
+CROSS JOIN Departments;
+
+
+-- 7
+WITH Avg_Salary AS
+(
+	SELECT AVG(Salary) AS Avg_Sal
+    FROM Employees
+)
+
+SELECT First_Name AS Employee_Name
+FROM Employees
+WHERE Salary > (SELECT Avg_Sal
+				FROM Avg_Salary);
+                
+                
+-- 8
+SELECT First_Name, Last_Name
+FROM Employees
+WHERE Salary < (SELECT Salary
+				FROM Employees
+                WHERE First_Name LIKE "%Steven%" 
+                AND Last_Name LIKE "%King%");
+                
+
+-- 9
+SELECT Department_Name, First_Name AS Manager_Name
+FROM Employees
+INNER JOIN Departments
+ON Employees.Department_Id = Departments.Department_Id;
+
+                
+                
+-- 10
+SELECT DISTINCT City
+FROM Departments
+INNER JOIN Locations
+ON Departments.Location_Id = Locations.Location_Id; 
