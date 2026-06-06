@@ -1,0 +1,121 @@
+SELECT *
+FROM Employees
+WHERE Salary < (SELECT Salary
+				FROM Employees
+				WHERE Employee_Id = 144);
+                
+                
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT MAX(Salary)
+				FROM Employees);
+                
+                
+
+SELECT *
+FROM Employees
+WHERE Department_Id = (SELECT Department_Id
+					   FROM Departments
+					   WHERE Department_Name = 'Marketing');
+                       
+                       
+		
+SELECT AVG(Salary)
+FROM Employees
+WHERE Department_Id = (SELECT Department_Id
+					   FROM Departments
+					   WHERE Department_Name = 'Marketing');
+                       
+                       
+SELECT COUNT(*) AS Employee
+FROM Employees
+WHERE Department_Id = (SELECT Department_Id
+					   FROM Departments
+                       WHERE Department_Name = 'IT');
+                       
+                       
+
+SELECT *
+FROM Employees
+WHERE Job_Id = (SELECT Job_Id
+				FROM Jobs
+				WHERE Job_Title = 'Programmer');
+                
+                
+SELECT SUM(Salary)
+FROM Employees
+WHERE Job_Id = (SELECT Job_Id
+				FROM Jobs
+				WHERE Job_Title = 'Programmer');
+                
+
+-- find which employee get second highest salary
+-- bad way  
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT DISTINCT Salary
+				FROM Employees
+				ORDER BY Salary DESC
+				LIMIT 1
+				OFFSET 1);
+                
+-- good way
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT MAX(Salary)
+				FROM Employees
+				WHERE Salary < (SELECT MAX(Salary)
+								FROM Employees));
+                                
+                                
+                                
+-- find which employee get more salary than his manager
+SELECT *
+FROM Employees AS EMP
+WHERE Salary > (SELECT Salary
+				FROM Employees AS MGR
+                WHERE EMP.Manager_Id = MGR.Employee_Id);
+                
+     
+     
+
+SELECT *
+FROM Employees AS EMP
+WHERE Job_Id = (SELECT Job_Id
+				FROM Employees AS MGR
+                WHERE EMP.Manager_Id = MGR.Employee_Id);
+                
+                
+
+WITH Temp AS
+(
+	SELECT *
+	FROM Employees
+	LIMIT 5
+)
+
+SELECT *
+FROM Temp;
+
+
+WITH AVG_IT AS
+(
+	SELECT AVG(Salary) AS Sal_1
+	FROM Employees
+	WHERE Department_Id = 60 -- IT 
+),
+
+MAX_MKT AS
+(
+	SELECT MAX(Salary) AS Sal_2
+	FROM Employees
+	WHERE Department_Id = 20 -- Marketing 
+)
+
+SELECT *
+FROM Employees
+WHERE Salary > (SELECT Sal_1 FROM AVG_IT) AND Salary < (SELECT Sal_2 FROM MAX_MKT);
+
+SELECT *
+FROM Employees
+WHERE Salary > (SELECT AVG(Salary) FROM Employees) AND Salary < (SELECT MAX(Salary) FROM Employees);
