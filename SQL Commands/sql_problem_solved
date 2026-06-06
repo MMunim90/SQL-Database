@@ -1,0 +1,100 @@
+-- 1
+SELECT name, street
+FROM customers
+WHERE city = 'Porto Alegre';
+
+-- 2
+SELECT city
+FROM providers
+ORDER BY city ASC; 
+
+-- 3
+SELECT MAX(price) AS price, MIN(price) AS price
+FROM products; 
+
+-- 4
+SELECT DISTINCT city
+FROM customers; 
+
+-- 5
+SELECT products.name AS name, providers.name AS name
+FROM providers
+JOIN products
+ON providers.id = products.id_providers
+WHERE providers.name = 'Ajax SA';
+
+-- 6 
+SELECT customers.name AS name
+FROM customers
+JOIN legal_person
+ON customers.id = legal_person.id_customers;
+
+-- 7
+SELECT id, password, MD5(password)
+FROM account; 
+
+-- 8
+SELECT products.name AS name, providers.name AS name, price
+FROM products
+JOIN providers
+ON products.id_providers = providers.id
+JOIN categories
+ON products.id_categories = categories.id
+WHERE price > 1000 AND categories.name = 'Super Luxury';
+
+-- 9
+SELECT movies.id, name
+FROM movies
+JOIN prices
+ON movies.id_prices = prices.id
+WHERE prices.value < 2;
+
+-- 10
+SELECT id, name
+FROM products
+WHERE price < 10 OR price > 100; 
+
+
+-- 11
+SELECT name
+FROM customers
+WHERE state = 'RS';
+
+
+-- 12
+SELECT products.name AS name, providers.name AS name
+FROM products
+JOIN providers
+ON products.id_providers = providers.id
+JOIN categories
+ON products.id_categories = categories.id
+WHERE categories.id = 6; 
+
+
+-- 13
+SELECT products.id, products.name AS name
+FROM products
+JOIN categories
+ON products.id_categories = categories.id
+WHERE categories.name LIKE 'super%'; 
+
+
+-- 14
+SELECT categories.name AS name, SUM(amount) AS sum
+FROM products
+JOIN categories
+ON products.id_categories = categories.id
+GROUP BY categories.name
+HAVING SUM(amount) != 0;
+
+-- 15
+SELECT ROUND(AVG(price), 2) AS price
+FROM products; 
+
+
+-- 16
+SELECT movies.id AS id, name
+FROM movies
+JOIN genres
+ON movies.id_genres = genres.id
+WHERE genres.description = 'Action';
