@@ -1,0 +1,77 @@
+CREATE DATABASE Assignment_1;
+USE Assignment_1;
+
+CREATE TABLE Student
+(
+	Id INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Age INT CHECK (Age >= 6),
+    Address VARCHAR(255),
+    Email VARCHAR(50) UNIQUE
+);
+
+CREATE TABLE Library
+(
+	Book_ID INT PRIMARY KEY,
+    Book_Name VARCHAR(30) NOT NULL,
+    Student_Id INT,
+	FOREIGN KEY (Student_Id) REFERENCES Student (Id)
+);
+
+CREATE TABLE Fees
+(
+	Fees_Amount INT CHECK (Fees_Amount = 2000),
+    Student_Id INT,
+    FOREIGN KEY (Student_Id) REFERENCES Student (Id)
+);
+
+DROP TABLE Student;
+
+SET SQL_SAFE_UPDATES = 0;
+
+
+CREATE TABLE Employee
+(
+	Employee_ID INT PRIMARY KEY,
+    First_Name VARCHAR(25),
+    Last_Name VARCHAR(25),
+    Age INT CHECK (Age >= 20),
+    Department VARCHAR(25)
+);
+
+
+INSERT INTO Employee (Employee_ID, First_Name, Last_Name, Age, Department)
+VALUES
+(1, 'John', 'Doe', 28, 'Sales'),
+(2, 'Jane', 'Smith', 32, 'Marketing'),
+(3, 'Michael', 'Johnson', 35, 'Finance'),
+(4, 'Sarah', 'Brown', 30, 'HR'),
+(5, 'William', 'Davis', 25, 'Engineering'),
+(6, 'Emily', 'Wilson', 28, 'Sales'),
+(7, 'Robert', 'Lee', 33, 'Marketing'),
+(8, 'Laura', 'Hall', 29, 'Finance'),
+(9, 'Thomas', 'White', 31, 'HR'),
+(10, 'Olivia', 'Clark', 27, 'Engineering');
+
+SELECT * FROM Employee;
+
+SELECT DISTINCT Department
+FROM Employee;
+
+SELECT *
+FROM Employee
+WHERE Department = 'Engineering';
+
+SELECT *
+FROM Employee
+WHERE First_Name LIKE '%son%' OR Last_Name LIKE '%son%';
+
+
+SELECT Last_Name
+FROM Employee
+ORDER BY Age DESC;
+
+
+SELECT Last_Name
+FROM Employee
+WHERE Age > 30 AND Department = 'Marketing';
