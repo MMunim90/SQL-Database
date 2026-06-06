@@ -1,0 +1,86 @@
+-- 1
+
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT MAX(Salary)
+				FROM Employees
+                WHERE Salary < (SELECT MAX(Salary)
+								FROM Employees
+                                WHERE Salary < (SELECT MAX(Salary)
+												FROM Employees)));
+                
+                
+                
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT DISTINCT Salary
+				FROM Employees
+                ORDER BY SALARY DESC
+				LIMIT 1
+				OFFSET 2);
+                
+                
+-- 2
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT MIN(Salary)
+				FROM Employees
+				WHERE Salary > (SELECT MIN(Salary)
+								FROM Employees
+                                WHERE Salary > (SELECT MIN(Salary)
+												FROM Employees))); 
+                                                
+
+
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT DISTINCT Salary
+				FROM Employees
+				ORDER BY Salary ASC
+                LIMIT 1
+                OFFSET 2);
+                
+
+
+
+-- 3
+SELECT *
+FROM Employees
+WHERE Hire_Date > (SELECT Hire_Date
+				   FROM Employees
+				   WHERE First_Name = 'Steven' AND Last_Name = 'King')
+LIMIT 5;
+
+                
+                
+-- 4.1
+WITH SECOND_MAX AS
+(
+	SELECT MAX(Salary) AS SEC_MAX
+    FROM Employees
+    WHERE Salary < (SELECT MAX(Salary)
+					FROM Employees)
+)
+
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT MAX(Salary)
+				FROM Employees
+				WHERE Salary < (SELECT SEC_MAX FROM SECOND_MAX));
+                
+                
+-- 4.2
+WITH SECOND_MIN AS
+(
+	SELECT MIN(Salary) AS MIN_SAL
+    FROM Employees
+    WHERE Salary > (SELECT MIN(Salary)
+					FROM Employees)
+)
+
+SELECT *
+FROM Employees
+WHERE Salary = (SELECT MIN(Salary)
+				FROM Employees
+                WHERE Salary > (SELECT MIN_SAL
+								FROM SECOND_MIN));
