@@ -1,0 +1,114 @@
+USE dummydb;
+
+SELECT *
+FROM Countries;
+
+
+SELECT *
+FROM Departments;
+
+
+SELECT *
+FROM Employees
+WHERE Department_id = 60 OR Salary > 8000;
+
+SELECT 5+4;
+
+SELECT First_Name, Salary, Salary+10000
+FROM Employees
+WHERE Department_Id = 100;
+
+SELECT *
+FROM Employees
+WHERE salary = 6000;
+
+
+SELECT DISTINCT Job_Id
+FROM Employees;
+
+
+SELECT *
+FROM Employees
+ORDER BY Salary DESC
+-- LIMIT 4, 5;
+LIMIT 5
+OFFSET 4;
+
+
+SELECT *
+FROM Employees
+WHERE Last_Name LIKE '%ee%';
+
+
+SELECT First_Name AS Name, Salary AS 'Current Salary', Salary+10000 AS Increased_Salary
+FROM Employees;
+
+
+SELECT First_Name, UPPER(First_Name)
+FROM Employees;
+
+SELECT COS(0);
+SELECT RADIANS(90);
+SELECT COS(RADIANS(90));
+
+SELECT ACOS(1);
+
+SELECT PI();
+
+SELECT ROUND(12.567, 2);
+
+SELECT RAND();
+
+SELECT MAX(Salary)
+FROM Employees;
+
+SELECT MIN(Salary)
+FROM Employees;
+
+
+SELECT AVG(Salary)
+FROM Employees;
+
+SELECT COUNT(Salary)
+FROM Employees;
+
+SELECT COUNT(Employee_Id)
+FROM Employees;
+
+SELECT COUNT(Manager_Id)
+FROM Employees;
+
+
+-- count  row
+SELECT COUNT(*)
+FROM Employees;
+
+
+SELECT Department_Id, MAX(Salary)
+FROM Employees
+GROUP BY Department_Id;
+
+SELECT Department_Id, AVG(Salary)
+FROM Employees
+GROUP BY Department_Id;
+
+SELECT Department_Id, COUNT(*)
+FROM Employees
+GROUP BY Department_Id;
+
+SELECT *
+FROM Employees
+WHERE Department_Id = 20;
+
+SELECT Department_Id, MAX(Salary)
+FROM Employees
+WHERE Department_Id != 20
+GROUP BY Department_Id
+HAVING MAX(Salary > 10000);
+
+
+SELECT Department_Id, AVG(Salary) AS sal
+FROM Employees
+WHERE Department_Id != 20
+GROUP BY Department_Id
+HAVING sal > 5000;
