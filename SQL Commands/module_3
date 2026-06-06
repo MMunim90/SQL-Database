@@ -1,0 +1,67 @@
+SELECT *
+FROM Employees;
+
+SELECT *
+FROM Jobs;
+
+SELECT *
+FROM Departments;
+
+SELECT *
+FROM Locations;
+
+-- 1
+SELECT First_Name, Last_Name, Job_Title
+FROM Employees, Jobs
+WHERE Employees.Job_Id = Jobs.Job_Id;
+
+
+-- 2
+SELECT First_Name, Last_Name, Job_Title
+FROM Employees
+INNER JOIN Jobs
+ON Employees.Job_Id = Jobs.Job_Id; 
+
+
+
+-- 3.1
+SELECT First_Name, Last_Name, Job_Title, Salary
+FROM Employees
+INNER JOIN Jobs
+ON Employees.Job_Id = Jobs.Job_Id
+ORDER BY Salary DESC
+LIMIT 1; 
+
+
+-- 3.2
+SELECT First_Name, Last_Name, Job_Title, Salary
+FROM Employees
+INNER JOIN Jobs
+ON Employees.Job_Id = Jobs.Job_Id
+WHERE Salary = (SELECT MAX(Salary)
+				FROM Employees);
+                
+                
+-- 4
+SELECT e.First_Name AS Employee, m.First_Name AS Manager
+FROM Employees AS e
+JOIN Employees AS m
+ON e.Manager_Id = m.Employee_Id;
+
+
+SELECT EMPLOYEE_ID, MANAGER_ID
+FROM EMPLOYEES;
+
+
+
+
+
+-- SELECT DEPARTMENTS.DEPARTMENT_NAME AS Department,
+--         EMPLOYEES.FIRST_NAME AS Employee,
+--         Salary 
+-- FROM EMPLOYEES
+-- JOIN DEPARTMENTS
+-- ON EMPLOYEES.DEPARTMENT_ID = DEPARTMENTS.DEPARTMENT_ID
+-- GROUP BY EMPLOYEES.DEPARTMENT_ID, DEPARTMENTS.DEPARTMENT_NAME,
+--         EMPLOYEES.FIRST_NAME, Salary 
+-- HAVING SALARY = MAX(SALARY);
