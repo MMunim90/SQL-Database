@@ -1,0 +1,26 @@
+SELECT * FROM Employees;
+SELECT * FROM Departments;
+
+-- add two table without join keyword 
+SELECT Employees.First_Name, Departments.Department_Name, Employees.Department_Id
+FROM Employees, Departments
+WHERE Employees.Department_Id = Departments.Department_Id;
+
+-- add two table with join keyword
+SELECT Employees.Department_Id, Employees.First_Name, Departments.Department_Name
+FROM Employees
+CROSS JOIN Departments
+ON Employees.Department_Id = Departments.Department_Id;
+
+
+SELECT Employees.Department_Id, Employees.First_Name, Departments.Department_Name
+FROM Employees
+JOIN Departments
+USING(Department_Id);
+
+
+-- self join
+SELECT m.First_Name AS Manager, e.First_Name AS Employee
+FROM Employees AS m
+JOIN Employees AS e
+ON m.Employee_Id = e.Manager_Id;
