@@ -98,3 +98,9 @@ FROM movies
 JOIN genres
 ON movies.id_genres = genres.id
 WHERE genres.description = 'Action';
+
+
+
+-- 17
+SELECT COUNT(DISTINCT city) AS count
+FROM customers;
