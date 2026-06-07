@@ -1,0 +1,45 @@
+CREATE DATABASE StudentLibManagement;
+USE StudentLibManagement;
+
+CREATE TABLE Student
+(
+	Roll INT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+
+CREATE TABLE Librarian
+(
+	Lib_Id INT PRIMARY KEY,
+    Lib_Name VARCHAR(50)
+);
+
+CREATE TABLE Book
+(
+	Book_Id INT PRIMARY KEY,
+    Book_Name VARCHAR(50),
+    Book_Genre VARCHAR(50)
+);
+
+CREATE TABLE Borrow
+(
+	Borrowed_By_Roll INT,
+    Borrowed_Book_Id INT,
+	Borrow_Date DATE,
+	Return_Date DATE,
+    
+    FOREIGN KEY(Borrowed_By_Roll) REFERENCES Student(Roll),
+    FOREIGN KEY(Borrowed_Book_Id) REFERENCES Book(Book_Id),
+    
+    PRIMARY KEY(Borrowed_By_Roll, Borrowed_Book_Id)
+);
+
+CREATE TABLE Permission
+(
+	Borrowed_Book_Id INT,
+    Permitted_By_Lib_Id INT,
+    
+    FOREIGN KEY(Borrowed_Book_Id) REFERENCES Book(Book_Id),
+    FOREIGN KEY(Permitted_By_Lib_Id) REFERENCES Librarian(Lib_Id),
+    
+    PRIMARY KEY(Borrowed_Book_Id, Permitted_By_Lib_Id)
+);

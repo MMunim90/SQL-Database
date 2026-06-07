@@ -1,0 +1,71 @@
+-- Student Attendence System
+CREATE DATABASE Student_Attendence_System;
+
+USE Student_Attendence_System;
+
+CREATE TABLE Student
+(
+	Student_Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Date_of_Birth DATE,
+    Address VARCHAR(255),
+    Phone VARCHAR(14),
+    Email VARCHAR(20)
+);
+
+CREATE TABLE Teacher
+(
+	Teacher_Id INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Phone VARCHAR(14),
+    Email VARCHAR(20),
+    Designation VARCHAR(50),
+    Qualification VARCHAR(255)
+);
+
+CREATE TABLE Class
+(
+	Class_Id INT PRIMARY KEY,
+    Class_Name VARCHAR(10),
+    Academic_Year VARCHAR(20)
+);
+
+CREATE TABLE Attendence
+(
+	Attendence_Id INT PRIMARY KEY,
+    Attendence_Date DATE,
+    Attendence_Status VARCHAR(15)
+);
+
+CREATE TABLE Contains
+(
+	Which_Student INT,
+    Which_Class INT,
+    
+    FOREIGN KEY (Which_Student) REFERENCES Student(Student_Id),
+    FOREIGN KEY (Which_Class) REFERENCES Class(Class_Id),
+    
+    PRIMARY KEY(Which_Student, Which_Class)
+);
+
+CREATE TABLE Attendence_Per_Class
+(
+	Which_Class INT,
+    Which_Attendence INT,
+    
+    FOREIGN KEY (Which_Class) REFERENCES Class(Class_Id),
+    FOREIGN KEY (Which_Attendence) REFERENCES Attendence(Attendence_Id),
+    
+    PRIMARY KEY(Which_Class, Which_Attendence)
+);
+
+CREATE TABLE Records
+(
+	Which_Attendence INT,
+	Which_Teacher INT,
+    
+    FOREIGN KEY (Which_Attendence) REFERENCES Attendence(Attendence_Id),
+    FOREIGN KEY (Which_Teacher) REFERENCES Teacher(Teacher_Id),
+    
+    PRIMARY KEY(Which_Attendence, Which_Teacher)
+);
